@@ -9,6 +9,7 @@ class InventoryCount extends Model
     protected $fillable = [
         'mattress_id',
         'count',
+        'store_id',
     ];
 
     protected $casts = [
@@ -26,4 +27,9 @@ class InventoryCount extends Model
 {
     return $query->orderBy('created_at', 'desc')->limit(1);
 }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

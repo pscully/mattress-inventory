@@ -44,6 +44,10 @@ class MattressResource extends Resource
                     ->label('Category')
                     ->relationship('category', 'name')
                     ->required(),
+                Forms\Components\CheckboxList::make('stores')
+                    ->label('Stores')
+                    ->relationship('stores', 'name')
+                    ->required(),
             ]);
     }
 
@@ -64,8 +68,13 @@ class MattressResource extends Resource
                 Tables\Columns\TextColumn::make('cost')
                     ->money()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('category_id')
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label("Category")
                     ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('stores.name')
+                    ->label("Stores")
+                    ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()

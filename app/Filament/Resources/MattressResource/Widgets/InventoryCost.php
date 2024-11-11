@@ -18,9 +18,9 @@ class InventoryCost extends BaseWidget
 
     public function getInventoryCost(): string
     {
-    //    For each mattress id , get the latest inventory count
-    //    Multiply the count by the cost per mattress
-    //    Sum the results
+    // For each mattress id, get the latest inventory count
+        // Multiply the count by the cost per mattress
+        // Sum the results
 
         $mattresses = Mattress::all();
 
@@ -29,11 +29,22 @@ class InventoryCost extends BaseWidget
         foreach ($mattresses as $mattress) {
             $inventoryCounts[] = InventoryCount::latestCount()->where('mattress_id', $mattress->id)->first();
         }
+
+        $inventoryCounts = collect($inventoryCounts);
+
+        if ($inventoryCounts->isEmpty()) {
+            return '$0.00';
+        }
   
         $cost = 0;
+
         foreach ($inventoryCounts as $inventoryCount) {
-            $cost += $inventoryCount->count * $inventoryCount->mattress->cost;
+            // Check if inventoryCount is not null before accessing properties
+            if ($inventoryCount !== null) {
+                $cost += $inventoryCount->count * $inventoryCount->mattress->cost;
+            }
         }
+
         return '$' . number_format($cost, 2);
     }
 }

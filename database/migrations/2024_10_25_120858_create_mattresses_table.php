@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('name');
         });
 
+        Schema::create('stores', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('name');
+        });
+
         Schema::create('mattresses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
@@ -27,6 +33,22 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+        });
+
+        Schema::create('mattress_store', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('mattress_id')->constrained()->onDelete('cascade');
+            $table->foreignId('store_id')->constrained()->onDelete('cascade');
+            $table->integer('inventory_count')->default(0); // Track inventory count per mattress per store
+            $table->timestamps();
+        });
+
+        Schema::create('inventory_counts', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->foreignId('mattress_id')->constrained('mattresses');
+            $table->integer('count');
+            $table->foreignId('store_id')->constrained('stores');
         });
     }
 

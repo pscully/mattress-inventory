@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::get('/', function(){
+    return redirect(route('app'));
+})
+    ->middleware(['auth', 'verified']);
 
 Route::view('app', 'app')
     ->middleware(['auth', 'verified'])

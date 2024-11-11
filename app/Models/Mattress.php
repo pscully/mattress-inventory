@@ -11,7 +11,7 @@ class Mattress extends Model
 
     protected $fillable = ['name', 'size', 'cost', 'category_id', 'quantity'];
 
-    protected $with = ['latestInventoryCount'];
+    protected $with = ['latestInventoryCount', 'stores'];
 
     protected $casts = [
         'cost' => 'decimal:2',
@@ -22,9 +22,21 @@ class Mattress extends Model
             return $this->belongsTo(Category::class);
         }
 
-        public function latestInventoryCount()
+    public function latestInventoryCount()
         {
             return $this->hasOne(InventoryCount::class)->latest('created_at');
+        }
+
+        public function stores()
+        {
+            return $this->belongsToMany(Store::class, 'mattress_store')
+                        ->withPivot('inventory_count')
+                        ->withTimestamps();
+        }
+
+        public function storeInventoryCounts()
+        {
+            return $this->hasMany(InventoryCount::class);
         }
 
 }
