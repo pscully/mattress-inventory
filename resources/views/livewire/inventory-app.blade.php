@@ -6,6 +6,14 @@
                 <option value="{{ $store->id }}">{{ $store->name }}</option>
             @endforeach
         </select>
+
+
+                <select wire:model.live="selectedDate">
+                    @foreach ($inventoryDates as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                    @endforeach
+                </select>
+
 </div>
 
     <!-- show inventory table for selected store -->

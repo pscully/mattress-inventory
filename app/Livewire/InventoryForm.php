@@ -46,7 +46,7 @@ class InventoryForm extends Component implements HasForms
             $this->storeName = 'All Stores';
         }
     }
-    
+
     public function getAllMattressesWithStoreId()
     {
 
@@ -60,7 +60,7 @@ class InventoryForm extends Component implements HasForms
 
 
         foreach ($this->mattresses as $mattress) {
-            $mattresses[] = TextInput::make($mattress->name . '-' . $mattress->size)->label($mattress->name . " " . ucfirst($mattress->size))->numeric()->suffixIcon('heroicon-m-hashtag')->suffixIconColor('success');
+            $mattresses[] = TextInput::make($mattress->name . '-' . $mattress->size)->label($mattress->name . " " . ucfirst($mattress->size))->numeric()->suffixIcon('heroicon-m-hashtag')->suffixIconColor('success')->required();
         }
         return $mattresses;
     }
